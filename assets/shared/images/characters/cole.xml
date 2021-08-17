@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="cole.png">
+	<!-- Created with deez nuts -->
+	<SubTexture name="Cole down note 0000" x="152" y="0" width="76" height="76"/>
+	<SubTexture name="Cole down note 0001" x="152" y="0" width="76" height="76"/>
+	<SubTexture name="Cole down note 0002" x="152" y="76" width="76" height="76"/>
+	<SubTexture name="Cole down note 0003" x="152" y="76" width="76" height="76"/>
+	<SubTexture name="Cole left note 0000" x="76" y="76"  width="76" height="76"/>
+	<SubTexture name="Cole left note 0001" x="76" y="76"  width="76" height="76"/>
+	<SubTexture name="Cole left note 0002" x="76" y="152" width="76" height="76"/>
+	<SubTexture name="Cole left note 0003" x="76" y="152" width="76" height="76"/>
+	<SubTexture name="Cole right note 0000" x="152" y="152" width="76" height="76"/>
+	<SubTexture name="Cole right note 0001" x="152" y="152" width="76" height="76"/>
+	<SubTexture name="Cole right note 0002" x="228" y="0" width="76" height="76"/>
+	<SubTexture name="Cole right note 0003" x="228" y="0" width="76" height="76"/>
+	<SubTexture name="Cole up note 0000" x="228" y="76" width="76" height="76"/>
+	<SubTexture name="Cole up note 0001" x="228" y="76" width="76" height="76"/>
+	<SubTexture name="Cole up note 0002" x="228" y="152" width="76" height="76"/>
+	<SubTexture name="Cole up note 0003" x="228" y="152" width="76" height="76"/>
+	<SubTexture name="Cole Idle 0000" x="0" y="0" width="76" height="76"/>
+	<SubTexture name="Cole Idle 0001" x="0" y="76" width="76" height="76"/>
+	<SubTexture name="Cole Idle 0002" x="0" y="152" width="76" height="76"/>
+	<SubTexture name="Cole Idle 0003" x="76" y="0" width="76" height="76"/>
+	<SubTexture name="Cole Idle 0004" x="76" y="0" width="76" height="76"/>
+	<SubTexture name="Cole Idle 0005" x="76" y="0" width="76" height="76"/>
+	<SubTexture name="Cole Idle 0006" x="76" y="0" width="76" height="76"/>
+	<SubTexture name="Cole Idle 0007" x="76" y="0" width="76" height="76"/>
+</TextureAtlas>

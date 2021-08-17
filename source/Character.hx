@@ -378,6 +378,23 @@ class Character extends FlxSprite
 				loadOffsetFile(curCharacter);
 
 				playAnim('idle');
+				
+			case 'cole':
+				frames = Paths.getSparrowAtlas('cole','shared',true);
+				animation.addByPrefix('idle', 'Cole Idle', 24, false);
+				animation.addByPrefix('singUP', 'Cole up note', 24, false);
+				animation.addByPrefix('singLEFT', 'Cole left note', 24, false);
+				animation.addByPrefix('singRIGHT', 'Cole right note', 24, false);
+				animation.addByPrefix('singDOWN', 'Cole down note', 24, false);
+
+				loadOffsetFile(curCharacter);
+
+				playAnim('idle');
+
+				setGraphicSize(Std.int(width * 6));
+				updateHitbox();
+
+				antialiasing = false;
 		}
 
 		dance();
