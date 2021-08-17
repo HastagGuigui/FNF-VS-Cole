@@ -20,6 +20,7 @@ class KeyBinds
         FlxG.save.data.downBind = "S";
         FlxG.save.data.leftBind = "A";
         FlxG.save.data.rightBind = "D";
+        FlxG.save.data.seventhBeat = "SPACE";
         FlxG.save.data.killBind = "R";
         FlxG.save.data.gpupBind = "DPAD_UP";
         FlxG.save.data.gpdownBind = "DPAD_DOWN";
@@ -31,6 +32,10 @@ class KeyBinds
 
     public static function keyCheck():Void
     {
+        if(FlxG.save.data.seventhBeat == null){
+            FlxG.save.data.seventhBeat = "SPACE";
+            trace("No MIDDLE");
+        }
         if(FlxG.save.data.upBind == null){
             FlxG.save.data.upBind = "W";
             trace("No UP");
