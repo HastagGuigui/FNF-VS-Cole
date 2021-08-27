@@ -1,0 +1,85 @@
+{ "frames": [
+   {
+    "filename": "RDLogo 0.ase",
+    "frame": { "x": 0, "y": 0, "w": 184, "h": 134 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 184, "h": 134 },
+    "sourceSize": { "w": 184, "h": 134 },
+    "duration": 100
+   },
+   {
+    "filename": "RDLogo 1.ase",
+    "frame": { "x": 184, "y": 0, "w": 184, "h": 134 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 184, "h": 134 },
+    "sourceSize": { "w": 184, "h": 134 },
+    "duration": 100
+   },
+   {
+    "filename": "RDLogo 2.ase",
+    "frame": { "x": 368, "y": 0, "w": 184, "h": 134 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 184, "h": 134 },
+    "sourceSize": { "w": 184, "h": 134 },
+    "duration": 100
+   },
+   {
+    "filename": "RDLogo 3.ase",
+    "frame": { "x": 0, "y": 134, "w": 184, "h": 134 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 184, "h": 134 },
+    "sourceSize": { "w": 184, "h": 134 },
+    "duration": 100
+   },
+   {
+    "filename": "RDLogo 4.ase",
+    "frame": { "x": 184, "y": 134, "w": 184, "h": 134 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 184, "h": 134 },
+    "sourceSize": { "w": 184, "h": 134 },
+    "duration": 100
+   },
+   {
+    "filename": "RDLogo 5.ase",
+    "frame": { "x": 368, "y": 134, "w": 184, "h": 134 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 184, "h": 134 },
+    "sourceSize": { "w": 184, "h": 134 },
+    "duration": 100
+   },
+   {
+    "filename": "RDLogo 6.ase",
+    "frame": { "x": 0, "y": 268, "w": 184, "h": 134 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 184, "h": 134 },
+    "sourceSize": { "w": 184, "h": 134 },
+    "duration": 100
+   },
+   {
+    "filename": "RDLogo 7.ase",
+    "frame": { "x": 184, "y": 268, "w": 184, "h": 134 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 184, "h": 134 },
+    "sourceSize": { "w": 184, "h": 134 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "https://github.com/LibreSprite/LibreSprite/",
+  "version": "1.0-dev",
+  "image": "I:\\Funkin-master\\FNF-VS-Cole\\assets\\preload\\images\\RDLogo.png",
+  "format": "RGBA8888",
+  "size": { "w": 552, "h": 402 },
+  "scale": "1",
+  "frameTags": [
+  ]
+ }
+}

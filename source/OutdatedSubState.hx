@@ -61,7 +61,7 @@ class OutdatedSubState extends MusicBeatState
 			+ "\nWhich is a PRE-RELEASE BUILD!"
 			+ "\n\nReport all bugs to the author of the pre-release.\nSpace/Escape ignores this.";
 		
-		txt.setFormat("VCR OSD Mono", 32, FlxColor.fromRGB(200, 200, 200), CENTER);
+		txt.setFormat(Paths.font("04b03.TTF"), 32, FlxColor.fromRGB(200, 200, 200), CENTER);
 		txt.borderColor = FlxColor.BLACK;
 		txt.borderSize = 3;
 		txt.borderStyle = FlxTextBorderStyle.OUTLINE;
