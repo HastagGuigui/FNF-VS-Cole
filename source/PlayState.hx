@@ -507,17 +507,6 @@ class PlayState extends MusicBeatState
 		{
 			stageCheck = SONG.stage;
 		}
-/*
-				case 'coleWard':{
-					curStage = 'coleWard';
-					//background, *finally*
-
-					wardBG = new FlxSprite(-50).loadGraphic(Paths.image('screenshot', 'week1'));
-					wardBG.scrollFactor.set(1,1);
-					wardBG.setGraphicSize(Std.int(wardBG.width * 1.5));
-					add(wardBG);
-				}
-*/
 		if (isStoryMode)
 			songMultiplier = 1;
 
