@@ -27541,10 +27541,10 @@
     "type": "BPM Change"
    }
   ],
-  "song": "Care less",
+  "song": "Care-less",
   "validScore": true,
   "sections": 0,
-  "needsVoices": false,
+  "needsVoices": true,
   "stage": "coleWard",
   "speed": 1,
   "bpm": 100,
