@@ -1,7 +1,7 @@
 package;
 
 import lime.app.Application;
-#if desktop
+#if FEATURE_DISCORD
 import Discord.DiscordClient;
 #end
 import openfl.display.BlendMode;
@@ -32,8 +32,7 @@ class Main extends Sprite
 
 	public static function main():Void
 	{
-
-		// quick checks 
+		// quick checks
 
 		Lib.current.addChild(new Main());
 	}
@@ -82,20 +81,26 @@ class Main extends Sprite
 		framerate = 60;
 		#end
 
-		#if cpp
+		// Run this first so we can see logs.
+		Debug.onInitProgram();
+
+		// Gotta run this before any assets get loaded.
+		ModCore.initialize();
+
+		#if FEATURE_FILESYSTEM
 		initialState = Caching;
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
 		#else
 		game = new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
 		#end
 		addChild(game);
-		#if desktop
+		#if FEATURE_DISCORD
 		DiscordClient.initialize();
 
-		Application.current.onExit.add (function (exitCode) {
+		Application.current.onExit.add(function(exitCode)
+		{
 			DiscordClient.shutdown();
-		 });
-		 
+		});
 		#end
 
 		#if !mobile
@@ -103,13 +108,17 @@ class Main extends Sprite
 		addChild(fpsCounter);
 		toggleFPS(FlxG.save.data.fps);
 		#end
+
+		// Finish up loading debug tools.
+		Debug.onGameStart();
 	}
 
 	var game:FlxGame;
 
 	var fpsCounter:FPS;
 
-	public function toggleFPS(fpsEnabled:Bool):Void {
+	public function toggleFPS(fpsEnabled:Bool):Void
+	{
 		fpsCounter.visible = fpsEnabled;
 	}
 

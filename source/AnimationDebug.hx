@@ -8,12 +8,18 @@ import flixel.addons.display.FlxGridOverlay;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import openfl.events.Event;
+import openfl.events.IOErrorEvent;
+import openfl.net.FileReference;
 
 /**
 	*DEBUG MODE
  */
+using StringTools;
+
 class AnimationDebug extends FlxState
 {
+	var _file:FileReference;
 	var bf:Boyfriend;
 	var dad:Character;
 	var char:Character;
@@ -68,10 +74,13 @@ class AnimationDebug extends FlxState
 
 		textAnim = new FlxText(300, 16);
 		textAnim.size = 26;
+		textAnim.setBorderStyle(OUTLINE, FlxColor.BLACK, 2);
 		textAnim.scrollFactor.set();
 		add(textAnim);
 
 		genBoyOffsets();
+
+    addHelpText();
 
 		camFollow = new FlxObject(0, 0, 2, 2);
 		camFollow.screenCenter();
@@ -100,7 +109,7 @@ class AnimationDebug extends FlxState
 		}
 	}
 
-	function copyBoyOffsets():Void
+	function saveBoyOffsets():Void
 	{
 		var result = "";
 
@@ -110,9 +119,49 @@ class AnimationDebug extends FlxState
 			result += text + "\n";
 		}
 
-		trace("Outputting animation offsets to clipboard...");
+		if ((result != null) && (result.length > 0))
+		{
+			_file = new FileReference();
+			_file.addEventListener(Event.COMPLETE, onSaveComplete);
+			_file.addEventListener(Event.CANCEL, onSaveCancel);
+			_file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+			_file.save(result.trim(), daAnim + "Offsets.txt");
+		}
+	}
 
-		openfl.system.System.setClipboard(result);
+	/**
+	 * Called when the save file dialog is completed.
+	 */
+	function onSaveComplete(_):Void
+	{
+		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
+		_file.removeEventListener(Event.CANCEL, onSaveCancel);
+		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+		_file = null;
+		FlxG.log.notice("Successfully saved OFFSET DATA.");
+	}
+
+	/**
+	 * Called when the save file dialog is cancelled.
+	 */
+	function onSaveCancel(_):Void
+	{
+		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
+		_file.removeEventListener(Event.CANCEL, onSaveCancel);
+		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+		_file = null;
+	}
+
+	/**
+	 * Called if there is an error while saving the offset data.
+	 */
+	function onSaveError(_):Void
+	{
+		_file.removeEventListener(Event.COMPLETE, onSaveComplete);
+		_file.removeEventListener(Event.CANCEL, onSaveCancel);
+		_file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+		_file = null;
+		FlxG.log.error("Problem saving Offset data");
 	}
 
 	function updateTexts():Void
@@ -124,12 +173,22 @@ class AnimationDebug extends FlxState
 		});
 	}
 
+  var helpText:FlxText;
+  function addHelpText():Void {
+    var helpTextValue = "Help:\nQ/E : Zoom in and out\nF : Flip\nI/J/K/L : Pan Camera\nW/S : Cycle Animation\nArrows : Offset Animation\nShift-Arrows : Offset Animation x10\nSpace : Replay Animation\nCTRL-S : Save Offsets to File\nEnter/ESC : Exit\nPress F1 to hide/show this!\n";
+    helpText = new FlxText(940, 20, 0, helpTextValue, 15);
+    helpText.scrollFactor.set();
+    helpText.color = FlxColor.BLUE;
+
+    add(helpText);
+  }
+
 	override function update(elapsed:Float)
 	{
 		textAnim.text = char.animation.curAnim.name;
 
 		if (FlxG.keys.justPressed.ENTER || FlxG.keys.justPressed.ESCAPE)
-			FlxG.switchState(new MainMenuState());
+			FlxG.switchState(new PlayState());
 
 		if (FlxG.keys.justPressed.E)
 			FlxG.camera.zoom += 0.25;
@@ -211,8 +270,13 @@ class AnimationDebug extends FlxState
 			char.playAnim(animList[curAnim]);
 		}
 
-		if (FlxG.keys.justPressed.V)
-			copyBoyOffsets();
+		if (FlxG.keys.pressed.CONTROL && FlxG.keys.justPressed.S)
+			saveBoyOffsets();
+
+    if (FlxG.keys.justPressed.F1)
+			FlxG.save.data.showHelp = !FlxG.save.data.showHelp;
+
+    helpText.visible = FlxG.save.data.showHelp;
 
 		super.update(elapsed);
 	}

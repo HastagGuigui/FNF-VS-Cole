@@ -1,6 +1,6 @@
 package;
 
-#if sys
+#if FEATURE_STEPMANIA
 import smTools.SMFile;
 #end
 import flixel.FlxG;
@@ -23,16 +23,10 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
-import io.newgrounds.NG;
 import lime.app.Application;
 import openfl.Assets;
-
-#if desktop
+#if FEATURE_DISCORD
 import Discord.DiscordClient;
-#end
-
-#if cpp
-import sys.thread.Thread;
 #end
 
 using StringTools;
@@ -53,34 +47,26 @@ class TitleState extends MusicBeatState
 
 	override public function create():Void
 	{
-		#if polymod
-		polymod.Polymod.init({modRoot: "mods", dirs: ['introMod']});
-		#end
-		
-		#if sys
+		// TODO: Refactor this to use OpenFlAssets.
+		#if FEATURE_FILESYSTEM
 		if (!sys.FileSystem.exists(Sys.getCwd() + "/assets/replays"))
 			sys.FileSystem.createDirectory(Sys.getCwd() + "/assets/replays");
 		#end
 
 		@:privateAccess
 		{
-			trace("Loaded " + openfl.Assets.getLibrary("default").assetsLoaded + " assets (DEFAULT)");
+			Debug.logTrace("We loaded " + openfl.Assets.getLibrary("default").assetsLoaded + " assets into the default library");
 		}
-		
-		#if !cpp
 
+		#if !cpp
 		FlxG.save.bind('funkin', 'ninjamuffin99');
 
 		PlayerSettings.init();
 
 		KadeEngineData.initSave();
-		
 		#end
 
-
-				
 		Highscore.load();
-
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 
@@ -89,13 +75,6 @@ class TitleState extends MusicBeatState
 		// DEBUG BULLSHIT
 
 		super.create();
-
-		// NGio.noLogin(APIStuff.API);
-
-		#if ng
-		var ng:NGio = new NGio(APIStuff.API, APIStuff.EncKey);
-		trace('NEWGROUNDS LOL');
-		#end
 
 		#if FREEPLAY
 		FlxG.switchState(new FreeplayState());
@@ -132,7 +111,7 @@ class TitleState extends MusicBeatState
 
 		logoBl = new FlxSprite(50, 600);
 		logoBl.frames = Paths.getSparrowAtlas('RDLogo');
-		logoBl.setGraphicSize(Std.int(logoBl.width*3.5));
+		logoBl.setGraphicSize(Std.int(logoBl.width * 3.5));
 
 		logoBl.antialiasing = false;
 		logoBl.animation.addByPrefix('bump', 'logo bumpin', 24, false);
@@ -158,7 +137,7 @@ class TitleState extends MusicBeatState
 		// titleText.screenCenter(X);
 		add(titleText);
 
-		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.image('logo'));
+		var logo:FlxSprite = new FlxSprite().loadGraphic(Paths.loadImage('logo'));
 		logo.screenCenter();
 		logo.antialiasing = FlxG.save.data.antialiasing;
 		// add(logo);
@@ -194,7 +173,8 @@ class TitleState extends MusicBeatState
 
 		if (initialized)
 			skipIntro();
-		else {
+		else
+		{
 			var diamond:FlxGraphic = FlxGraphic.fromClass(GraphicTransTileDiamond);
 			diamond.persist = true;
 			diamond.destroyOnNoUse = false;
@@ -246,7 +226,6 @@ class TitleState extends MusicBeatState
 	{
 		if (FlxG.sound.music != null)
 			Conductor.songPosition = FlxG.sound.music.time;
-		// FlxG.watch.addQuick('amp', FlxG.sound.music.amplitude);
 
 		if (FlxG.keys.justPressed.F)
 		{
@@ -267,14 +246,6 @@ class TitleState extends MusicBeatState
 
 		if (pressedEnter && !transitioning && skippedIntro)
 		{
-			#if !switch
-			NGio.unlockMedal(60960);
-
-			// If it's Friday according to da clock
-			if (Date.now().getDay() == 5)
-				NGio.unlockMedal(61034);
-			#end
-
 			if (FlxG.save.data.flashing)
 				titleText.animation.play('press');
 
@@ -290,15 +261,15 @@ class TitleState extends MusicBeatState
 			new FlxTimer().start(2, function(tmr:FlxTimer)
 			{
 				// Get current version of Kade Engine
-				
+
 				var http = new haxe.Http("https://raw.githubusercontent.com/KadeDev/Kade-Engine/master/version.downloadMe");
 				var returnedData:Array<String> = [];
-				
-				http.onData = function (data:String)
+
+				http.onData = function(data:String)
 				{
 					returnedData[0] = data.substring(0, data.indexOf(';'));
 					returnedData[1] = data.substring(data.indexOf('-'), data.length);
-				  	if (!MainMenuState.kadeEngineVer.contains(returnedData[0].trim()) && !OutdatedSubState.leftState)
+					if (!MainMenuState.kadeEngineVer.contains(returnedData[0].trim()) && !OutdatedSubState.leftState)
 					{
 						trace('outdated lmao! ' + returnedData[0] + ' != ' + MainMenuState.kadeEngineVer);
 						OutdatedSubState.needVer = returnedData[0];
@@ -312,13 +283,14 @@ class TitleState extends MusicBeatState
 						clean();
 					}
 				}
-				
-				http.onError = function (error) {
-				  trace('error: $error');
-				  FlxG.switchState(new MainMenuState()); // fail but we go anyway
-				  clean();
+
+				http.onError = function(error)
+				{
+					trace('error: $error');
+					FlxG.switchState(new MainMenuState()); // fail but we go anyway
+					clean();
 				}
-				
+
 				http.request();
 			});
 			// FlxG.sound.play(Paths.music('titleShoot'), 0.7);
@@ -373,8 +345,6 @@ class TitleState extends MusicBeatState
 			gfDance.animation.play('danceRight');
 		else
 			gfDance.animation.play('danceLeft');
-
-		FlxG.log.add(curBeat);
 
 		switch (curBeat)
 		{
@@ -436,22 +406,28 @@ class TitleState extends MusicBeatState
 	{
 		if (!skippedIntro)
 		{
+			Debug.logInfo("Skipping intro...");
+
 			remove(ngSpr);
 
 			FlxG.camera.flash(FlxColor.WHITE, 4);
 			remove(credGroup);
 
-			FlxTween.tween(logoBl,{y: -50}, 1.4, {ease: FlxEase.expoInOut});
+			FlxTween.tween(logoBl, {y: -50}, 1.4, {ease: FlxEase.expoInOut});
 
 			logoBl.angle = -4;
 
 			new FlxTimer().start(0.01, function(tmr:FlxTimer)
-				{
-					if(logoBl.angle == -4) 
-						FlxTween.angle(logoBl, logoBl.angle, 4, 4, {ease: FlxEase.quartInOut});
-					if (logoBl.angle == 4) 
-						FlxTween.angle(logoBl, logoBl.angle, -4, 4, {ease: FlxEase.quartInOut});
-				}, 0);
+			{
+				if (logoBl.angle == -4)
+					FlxTween.angle(logoBl, logoBl.angle, 4, 4, {ease: FlxEase.quartInOut});
+				if (logoBl.angle == 4)
+					FlxTween.angle(logoBl, logoBl.angle, -4, 4, {ease: FlxEase.quartInOut});
+			}, 0);
+
+			// It always bugged me that it didn't do this before.
+			// Skip ahead in the song to the drop.
+			FlxG.sound.music.time = 9400; // 9.4 seconds
 
 			skippedIntro = true;
 		}
