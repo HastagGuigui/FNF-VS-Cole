@@ -131,8 +131,8 @@ class StoryMenuState extends MusicBeatState
 		for (i in 0...weekData().length)
 		{
 			var weekThing:MenuItem = new MenuItem(0, yellowBG.y + yellowBG.height + 10, i);
-			weekThing.y += ((weekThing.height + 20) * i);
-			weekThing.targetY = i;
+			weekThing.x += ((weekThing.height + 20) * i);
+			weekThing.targetX = i;
 			grpWeekText.add(weekThing);
 
 			weekThing.screenCenter(X);
@@ -164,7 +164,7 @@ class StoryMenuState extends MusicBeatState
 
 		trace("Line 124");
 
-		leftArrow = new FlxSprite(grpWeekText.members[0].x + grpWeekText.members[0].width + 10, grpWeekText.members[0].y + 10);
+		leftArrow = new FlxSprite(FlxG.width * 0.4, FlxG.width * 0.1);
 		leftArrow.frames = ui_tex;
 		leftArrow.animation.addByPrefix('idle', "arrow left");
 		leftArrow.animation.addByPrefix('press', "arrow push left");
@@ -224,6 +224,7 @@ class StoryMenuState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
+	
 		// scoreText.setFormat('Paths.font("04b03.TTF")', 32);
 		lerpScore = Math.floor(FlxMath.lerp(lerpScore, intendedScore, 0.5));
 
@@ -249,57 +250,57 @@ class StoryMenuState extends MusicBeatState
 
 				if (gamepad != null)
 				{
-					if (gamepad.justPressed.DPAD_UP)
+					if (gamepad.justPressed.DPAD_LEFT)
 					{
 						changeWeek(-1);
 					}
-					if (gamepad.justPressed.DPAD_DOWN)
+					if (gamepad.justPressed.DPAD_RIGHT)
 					{
 						changeWeek(1);
 					}
 
-					if (gamepad.pressed.DPAD_RIGHT)
+					if (gamepad.pressed.DPAD_UP)
 						rightArrow.animation.play('press')
 					else
 						rightArrow.animation.play('idle');
-					if (gamepad.pressed.DPAD_LEFT)
+					if (gamepad.pressed.DPAD_DOWN)
 						leftArrow.animation.play('press');
 					else
 						leftArrow.animation.play('idle');
 
-					if (gamepad.justPressed.DPAD_RIGHT)
+					if (gamepad.justPressed.DPAD_UP)
 					{
 						changeDifficulty(1);
 					}
-					if (gamepad.justPressed.DPAD_LEFT)
+					if (gamepad.justPressed.DPAD_DOWN)
 					{
 						changeDifficulty(-1);
 					}
 				}
 
-				if (FlxG.keys.justPressed.UP)
+				if (FlxG.keys.justPressed.LEFT)
 				{
 					changeWeek(-1);
 				}
 
-				if (FlxG.keys.justPressed.DOWN)
+				if (FlxG.keys.justPressed.RIGHT)
 				{
 					changeWeek(1);
 				}
 
-				if (controls.RIGHT)
+				if (controls.UP)
 					rightArrow.animation.play('press')
 				else
 					rightArrow.animation.play('idle');
 
-				if (controls.LEFT)
+				if (controls.DOWN)
 					leftArrow.animation.play('press');
 				else
 					leftArrow.animation.play('idle');
 
-				if (controls.RIGHT_P)
+				if (controls.UP)
 					changeDifficulty(1);
-				if (controls.LEFT_P)
+				if (controls.DOWN)
 					changeDifficulty(-1);
 			}
 
