@@ -39,7 +39,7 @@ class MenuItem extends FlxSpriteGroup
 	{
 		super.update(elapsed);
 		y = FlxMath.lerp(y, (targetY * 120) + 480, 0.17 * (60 / FlxG.save.data.fpsCap));
-		x = FlxMath.lerp(x, (targetX * 120) + 480, 0.17 * (60 / FlxG.save.data.fpsCap));
+		x = FlxMath.lerp(x, (targetX * 480) + 480, 0.17 * (60 / FlxG.save.data.fpsCap));
 
 		if (isFlashing)
 			flashingInt += 1;

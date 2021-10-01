@@ -32,7 +32,7 @@ class StoryMenuState extends MusicBeatState
 
 	public static var weekUnlocked:Array<Bool> = [];
 
-	var weekCharacters:Array<Dynamic> = [['', 'bf', 'gf'], ['' /*cole*/, 'bf', 'gf'],];
+	var weekCharacters:Array<Dynamic> = [['gf'], ['cole'],];
 
 	var weekNames:Array<String> = CoolUtil.coolTextFile(Paths.txt('data/weekNames'));
 
@@ -125,7 +125,7 @@ class StoryMenuState extends MusicBeatState
 		for (i in 0...weekData().length)
 		{
 			var weekThing:MenuItem = new MenuItem(0, yellowBG.y + yellowBG.height + 10, i);
-			weekThing.x += ((weekThing.height + 20) * i);
+			weekThing.x += ((weekThing.width + 20) * i);
 			weekThing.targetX = i;
 			grpWeekText.add(weekThing);
 
@@ -149,16 +149,14 @@ class StoryMenuState extends MusicBeatState
 
 		trace("Line 96");
 
-		grpWeekCharacters.add(new MenuCharacter(0, 100, 0.5, false));
-		grpWeekCharacters.add(new MenuCharacter(450, 25, 0.9, true));
-		grpWeekCharacters.add(new MenuCharacter(850, 100, 0.5, true));
+		grpWeekCharacters.add(new MenuCharacter(450, 25, 0.7, true));
 
 		difficultySelectors = new FlxGroup();
 		add(difficultySelectors);
 
 		trace("Line 124");
 
-		leftArrow = new FlxSprite(FlxG.width * 0.4, FlxG.width * 0.1);
+		leftArrow = new FlxSprite(480, 650);
 		leftArrow.frames = ui_tex;
 		leftArrow.animation.addByPrefix('idle', "arrow left");
 		leftArrow.animation.addByPrefix('press', "arrow push left");
@@ -205,8 +203,8 @@ class StoryMenuState extends MusicBeatState
 
 		for (item in grpWeekText.members)
 		{
-			item.targetY = bullShit - curWeek;
-			if (item.targetY == Std.int(0) && weekUnlocked[curWeek])
+			item.targetX = bullShit - curWeek;
+			if (item.targetX == Std.int(0) && weekUnlocked[curWeek])
 				item.alpha = 1;
 			else
 				item.alpha = 0.6;
@@ -331,7 +329,7 @@ class StoryMenuState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('confirmMenu'));
 
 				grpWeekText.members[curWeek].startFlashing();
-				grpWeekCharacters.members[1].animation.play('bfConfirm');
+				// grpWeekCharacters.members[1].animation.play('bfConfirm');
 				stopspamming = true;
 			}
 
@@ -413,8 +411,8 @@ class StoryMenuState extends MusicBeatState
 
 		for (item in grpWeekText.members)
 		{
-			item.targetY = bullShit - curWeek;
-			if (item.targetY == Std.int(0) && weekUnlocked[curWeek])
+			item.targetX = bullShit - curWeek;
+			if (item.targetX == Std.int(0) && weekUnlocked[curWeek])
 				item.alpha = 1;
 			else
 				item.alpha = 0.6;
@@ -429,8 +427,6 @@ class StoryMenuState extends MusicBeatState
 	function updateText()
 	{
 		grpWeekCharacters.members[0].setCharacter(weekCharacters[curWeek][0]);
-		grpWeekCharacters.members[1].setCharacter(weekCharacters[curWeek][1]);
-		grpWeekCharacters.members[2].setCharacter(weekCharacters[curWeek][2]);
 
 		txtTracklist.text = "Tracks\n";
 		var stringThing:Array<String> = weekData()[curWeek];
@@ -469,12 +465,8 @@ class StoryMenuState extends MusicBeatState
 		if (curBeat % 2 == 0)
 		{
 			grpWeekCharacters.members[0].bopHead();
-			grpWeekCharacters.members[1].bopHead();
 		}
 		else if (weekCharacters[curWeek][0] == 'spooky' || weekCharacters[curWeek][0] == 'gf')
 			grpWeekCharacters.members[0].bopHead();
-
-		if (weekCharacters[curWeek][2] == 'spooky' || weekCharacters[curWeek][2] == 'gf')
-			grpWeekCharacters.members[2].bopHead();
 	}
 }
