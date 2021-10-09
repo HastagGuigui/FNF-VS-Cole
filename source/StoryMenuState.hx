@@ -32,7 +32,7 @@ class StoryMenuState extends MusicBeatState
 
 	public static var weekUnlocked:Array<Bool> = [];
 
-	var weekCharacters:Array<Dynamic> = [['gf'], ['cole'],];
+	var weekCharacters:Array<Dynamic> = [['gf'], [''],];
 
 	var weekNames:Array<String> = CoolUtil.coolTextFile(Paths.txt('data/weekNames'));
 
@@ -282,19 +282,20 @@ class StoryMenuState extends MusicBeatState
 				}
 
 				if (controls.UP)
-					rightArrow.animation.play('press')
+				{
+					rightArrow.animation.play('press');
+					changeDifficulty(1);
+				}
 				else
 					rightArrow.animation.play('idle');
 
 				if (controls.DOWN)
+				{
 					leftArrow.animation.play('press');
+					changeDifficulty(-1);
+				}
 				else
 					leftArrow.animation.play('idle');
-
-				if (controls.UP)
-					changeDifficulty(1);
-				if (controls.DOWN)
-					changeDifficulty(-1);
 			}
 
 			if (controls.ACCEPT)

@@ -32,7 +32,7 @@ class Stage extends MusicBeatState
 	// All of the above must be set or used in your stage case code block!!
 	public var positions:Map<String, Map<String, Array<Int>>> = [
 		// Assign your characters positions on stage here!
-		'coleWard' => ['cole' => [0, 100], 'gf-pixel' => [100, 140]],
+		'coleWard' => ['cole' => [0, 25], 'bf-pixel' => [970, 100], 'gf-pixel' => [580, 0]],
 		'halloween' => ['spooky' => [100, 300], 'monster' => [100, 200]],
 		'philly' => ['pico' => [100, 400]],
 		'limo' => ['bf-car' => [1030, 230]],
@@ -57,13 +57,41 @@ class Stage extends MusicBeatState
 
 		switch (daStage)
 		{
+			case 'undefined':
+				{
+					// emptiness
+				}
 			case 'coleWard':
 				{
 					// background, *finally*
-					var wardBG = new FlxSprite(-50).loadGraphic(Paths.image('screenshot', 'week1'));
+					var wardBG = new FlxSprite(-50).loadGraphic(Paths.image('theWard', 'week1'));
 					wardBG.scrollFactor.set(1, 1);
 					wardBG.setGraphicSize(Std.int(wardBG.width * 1.5));
+					swagBacks["wardBG"] = wardBG;
 					toAdd.push(wardBG);
+				}
+			case "coleWardDay":
+				{
+					// cole's ward but light mode
+					var wardBG = new FlxSprite(-50).loadGraphic(Paths.image('theWardDay', 'week1'));
+					wardBG.scrollFactor.set(1, 1);
+					wardBG.setGraphicSize(Std.int(wardBG.width * 1.5));
+					swagBacks["wardBGDay"] = wardBG;
+					toAdd.push(wardBG);
+				}
+			case "scrollingGrid":
+				{
+					for (x in 0...10)
+					{
+						for (y in 0...10)
+						{
+							var gridTile = new FlxSprite(x * 48 - 100, y * 48 - 100);
+							gridTile.scrollFactor.set(0.7, 0.7);
+							gridTile.setGraphicSize(48, 48);
+							swagBacks['bgGridTile' + x + "_" + y] = gridTile;
+							toAdd.push(gridTile);
+						}
+					}
 				}
 			case 'halloween':
 				{
@@ -461,6 +489,17 @@ class Stage extends MusicBeatState
 		{
 			switch (curStage)
 			{
+				case 'scrollingGrid':
+					// idk scroll it somehow?
+					for (x in 0...10)
+					{
+						for (y in 0...10)
+						{
+							var gridTile = swagBacks["bgGridTile" + x + "_" + y];
+							gridTile.x += 1;
+							gridTile.y += 1;
+						}
+					}
 				case 'philly':
 					if (trainMoving)
 					{
@@ -607,7 +646,6 @@ class Stage extends MusicBeatState
 
 	var trainMoving:Bool = false;
 	var trainFrameTiming:Float = 0;
-
 	var trainCars:Int = 8;
 	var trainFinishing:Bool = false;
 	var trainCooldown:Int = 0;
