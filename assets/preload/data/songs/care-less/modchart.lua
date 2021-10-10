@@ -33,6 +33,7 @@ function beatHit(beat) -- arguments, the current beat of the song
         end
     elseif beat == 15 then 
         Game:changeStage("undefined")
+        gf.alpha = 0
     elseif beat == 41 then
         for i=0,3,1 do
             local receptor = _G['receptor_'..i]
@@ -52,7 +53,10 @@ function beatHit(beat) -- arguments, the current beat of the song
             local receptor = _G['receptor_'..i]
             receptor.x = receptor.x+250
         end
+        gf.alpha = 1
         Game:changeStage("coleWardDay")
+    elseif beat == 81 then
+        Game:changeStage("scrollingGrid")
     end
 end
 

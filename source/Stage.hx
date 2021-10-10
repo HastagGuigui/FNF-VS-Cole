@@ -32,7 +32,7 @@ class Stage extends MusicBeatState
 	// All of the above must be set or used in your stage case code block!!
 	public var positions:Map<String, Map<String, Array<Int>>> = [
 		// Assign your characters positions on stage here!
-		'coleWard' => ['cole' => [0, 25], 'bf-pixel' => [970, 100], 'gf-pixel' => [580, 0]],
+		'coleWard' => ['cole' => [-80, 435], 'bf-pixel' => [576, 462], 'gf-pixel' => [210, 295]],
 		'halloween' => ['spooky' => [100, 300], 'monster' => [100, 200]],
 		'philly' => ['pico' => [100, 400]],
 		'limo' => ['bf-car' => [1030, 230]],
@@ -64,7 +64,7 @@ class Stage extends MusicBeatState
 			case 'coleWard':
 				{
 					// background, *finally*
-					var wardBG = new FlxSprite(-50).loadGraphic(Paths.image('theWard', 'week1'));
+					var wardBG = new FlxSprite(-250).loadGraphic(Paths.image('theWard', 'week1'));
 					wardBG.scrollFactor.set(1, 1);
 					wardBG.setGraphicSize(Std.int(wardBG.width * 1.5));
 					swagBacks["wardBG"] = wardBG;
@@ -73,7 +73,7 @@ class Stage extends MusicBeatState
 			case "coleWardDay":
 				{
 					// cole's ward but light mode
-					var wardBG = new FlxSprite(-50).loadGraphic(Paths.image('theWardDay', 'week1'));
+					var wardBG = new FlxSprite(-250).loadGraphic(Paths.image('theWardDay', 'week1'));
 					wardBG.scrollFactor.set(1, 1);
 					wardBG.setGraphicSize(Std.int(wardBG.width * 1.5));
 					swagBacks["wardBGDay"] = wardBG;
@@ -81,17 +81,15 @@ class Stage extends MusicBeatState
 				}
 			case "scrollingGrid":
 				{
-					for (x in 0...10)
-					{
-						for (y in 0...10)
-						{
-							var gridTile = new FlxSprite(x * 48 - 100, y * 48 - 100);
-							gridTile.scrollFactor.set(0.7, 0.7);
-							gridTile.setGraphicSize(48, 48);
-							swagBacks['bgGridTile' + x + "_" + y] = gridTile;
-							toAdd.push(gridTile);
-						}
-					}
+					var gridTile = new FlxSprite(-100, -100).loadGraphic(Paths.image('gridTile', 'week1'));
+					gridTile.scrollFactor.set(0.7, 0.7);
+					gridTile.setGraphicSize(48 * 256, 48 * 256);
+					swagBacks['gridTile'] = gridTile;
+					toAdd.push(gridTile);
+				}
+			case "samuraiWard":
+				{
+					// samurai fuckin rolling
 				}
 			case 'halloween':
 				{
@@ -490,15 +488,19 @@ class Stage extends MusicBeatState
 			switch (curStage)
 			{
 				case 'scrollingGrid':
-					// idk scroll it somehow?
-					for (x in 0...10)
+					var gridTile = swagBacks["gridTile"];
+					gridFrameTiming += elapsed;
+					if (gridFrameTiming > 1 / 24)
 					{
-						for (y in 0...10)
+						gridTile.x += 10;
+						gridTile.y += 10;
+						if (gridTile.x >= -100 + (48 * 256))
 						{
-							var gridTile = swagBacks["bgGridTile" + x + "_" + y];
-							gridTile.x += 1;
-							gridTile.y += 1;
+							gridTile.x -= 48 * 256;
+							gridTile.y -= 48 * 256;
 						}
+
+						gridFrameTiming -= 1 / 24;
 					}
 				case 'philly':
 					if (trainMoving)
@@ -628,6 +630,8 @@ class Stage extends MusicBeatState
 	}
 
 	// Variables and Functions for Stages
+	var gridFrameTiming:Float = 0;
+
 	var lightningStrikeBeat:Int = 0;
 	var lightningOffset:Int = 8;
 	var curLight:Int = 0;
