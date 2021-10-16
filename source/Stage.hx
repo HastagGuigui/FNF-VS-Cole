@@ -90,6 +90,11 @@ class Stage extends MusicBeatState
 			case "samuraiWard":
 				{
 					// samurai fuckin rolling
+					var wardBG = new FlxSprite(-250).loadGraphic(Paths.image('samurai gaming', 'week1'));
+					wardBG.scrollFactor.set(1, 1);
+					wardBG.setGraphicSize(Std.int(wardBG.width * 1.5));
+					swagBacks["samuraiWard"] = wardBG;
+					toAdd.push(wardBG);
 				}
 			case 'halloween':
 				{

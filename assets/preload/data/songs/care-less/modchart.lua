@@ -57,6 +57,10 @@ function beatHit(beat) -- arguments, the current beat of the song
         Game:changeStage("coleWardDay")
     elseif beat == 81 then
         Game:changeStage("scrollingGrid")
+    elseif beat == 111 then
+        Game:changeStage("samuraiWard")
+    elseif beat == 111 then
+        Game:changeStage("coleWardDay")
     end
 end
 
