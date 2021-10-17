@@ -1,6 +1,7 @@
 // this file is for modchart things, this is to declutter playstate.hx
 // Lua
 #if FEATURE_LUAMODCHART
+import LuaClass.LuaText;
 import LuaClass.LuaGame;
 import LuaClass.LuaWindow;
 import LuaClass.LuaSprite;
@@ -24,6 +25,7 @@ import llua.LuaL;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
 import flixel.FlxG;
+import flixel.text.FlxText;
 
 class ModchartState
 {
@@ -271,6 +273,7 @@ class ModchartState
 	}
 
 	public static var luaSprites:Map<String, FlxSprite> = [];
+	public static var luaTexts:Map<String, FlxText> = [];
 
 	function changeDadCharacter(id:String)
 	{
@@ -388,6 +391,38 @@ class ModchartState
 		return toBeCalled;
 	}
 
+	function makeLuaText(fontPath:String, textContent:String, fontSize:Int, toBeCalled:String, drawBehind:Bool)
+	{
+		#if FEATURE_FILESYSTEM
+		var textObject:FlxText = new FlxText(0, 0);
+		textObject.setFormat(Paths.font(fontPath), fontSize, FlxColor.WHITE, RIGHT);
+
+		luaTexts.set(toBeCalled, textObject);
+		// and I quote:
+		// shitty layering but it works!
+		@:privateAccess
+		{
+			if (drawBehind)
+			{
+				PlayState.instance.removeObject(PlayState.gf);
+				PlayState.instance.removeObject(PlayState.boyfriend);
+				PlayState.instance.removeObject(PlayState.dad);
+			}
+			PlayState.instance.addObject(textObject);
+			if (drawBehind)
+			{
+				PlayState.instance.addObject(PlayState.gf);
+				PlayState.instance.addObject(PlayState.boyfriend);
+				PlayState.instance.addObject(PlayState.dad);
+			}
+		}
+		#end
+
+		new LuaText(textObject, toBeCalled).Register(lua);
+
+		return toBeCalled;
+	}
+
 	public function die()
 	{
 		Lua.close(lua);
@@ -477,6 +512,7 @@ class ModchartState
 		// callbacks
 
 		Lua_helper.add_callback(lua, "makeSprite", makeLuaSprite);
+		Lua_helper.add_callback(lua, "makeText", makeLuaText);
 
 		// sprites
 

@@ -6,6 +6,7 @@ import llua.State;
 import llua.LuaL;
 import flixel.util.FlxAxes;
 import flixel.FlxSprite;
+import flixel.text.FlxText;
 import lime.app.Application;
 import openfl.Lib;
 #if FEATURE_FILESYSTEM
@@ -1744,6 +1745,317 @@ class LuaSprite extends LuaClass
 			return 0;
 		}
 		Reflect.setProperty(sprite, Lua.tostring(l, 2), Lua.tonumber(l, 3));
+		return 0;
+	}
+
+	override function Register(l:State)
+	{
+		state = l;
+		super.Register(l);
+	}
+}
+
+class LuaText extends LuaClass
+{ // added in because yes
+	private static var state:State;
+
+	public var text:FlxText;
+
+	public static var ListOfTexts:Array<LuaText> = [];
+
+	public function new(connectedText:FlxText, name:String)
+	{
+		super();
+		className = name;
+
+		properties = [
+			"text" => {
+				defaultValue: "",
+				getter: function(l:State, data:Any):Int
+				{
+					Lua.pushstring(l, connectedText.text);
+					return 1;
+				},
+				setter: function(l:State):Int
+				{
+					// 1 = self
+					// 2 = key
+					// 3 = value
+					// 4 = metatable
+					// thanks kade very cool
+					if (Lua.type(l, 3) != Lua.LUA_TSTRING)
+					{
+						LuaL.error(l, "invalid argument #3 (string expected, got " + Lua.typename(l, Lua.type(l, 3)) + ")");
+						return 0;
+					}
+
+					var newText = Lua.tostring(l, 3);
+					connectedText.text = newText;
+					LuaClass.DefaultSetter(l);
+					return 0;
+				}
+			},
+			"alpha" => {
+				defaultValue: 1,
+				getter: function(l:State, data:Any):Int
+				{
+					Lua.pushnumber(l, connectedText.alpha);
+					return 1;
+				},
+				setter: SetNumProperty
+			},
+
+			"angle" => {
+				defaultValue: 1,
+				getter: function(l:State, data:Any):Int
+				{
+					Lua.pushnumber(l, connectedText.angle);
+					return 1;
+				},
+				setter: function(l:State):Int
+				{
+					// 1 = self
+					// 2 = key
+					// 3 = value
+					// 4 = metatable
+					if (Lua.type(l, 3) != Lua.LUA_TNUMBER)
+					{
+						LuaL.error(l, "invalid argument #3 (number expected, got " + Lua.typename(l, Lua.type(l, 3)) + ")");
+						return 0;
+					}
+
+					var angle = Lua.tonumber(l, 3);
+					connectedText.angle = angle;
+
+					LuaClass.DefaultSetter(l);
+					return 0;
+				}
+			},
+
+			"x" => {
+				defaultValue: connectedText.x,
+				getter: function(l:State, data:Any):Int
+				{
+					Lua.pushnumber(l, connectedText.x);
+					return 1;
+				},
+				setter: SetNumProperty
+			},
+
+			"tweenPos" => {
+				defaultValue: 0,
+				getter: function(l:State, data:Any)
+				{
+					Lua.pushcfunction(l, tweenPosC);
+					return 1;
+				},
+				setter: function(l:State)
+				{
+					LuaL.error(l, "tweenPos is read-only.");
+					return 0;
+				}
+			},
+
+			"id" => {
+				defaultValue: name,
+				getter: function(l:State, data:Any):Int
+				{
+					Lua.pushstring(l, name);
+					return 1;
+				},
+				setter: SetNumProperty
+			},
+
+			"tweenAlpha" => {
+				defaultValue: 0,
+				getter: function(l:State, data:Any)
+				{
+					Lua.pushcfunction(l, tweenAlphaC);
+					return 1;
+				},
+				setter: function(l:State)
+				{
+					LuaL.error(l, "tweenAlpha is read-only.");
+					return 0;
+				}
+			},
+
+			"tweenAngle" => {
+				defaultValue: 0,
+				getter: function(l:State, data:Any)
+				{
+					Lua.pushcfunction(l, tweenAngleC);
+					return 1;
+				},
+				setter: function(l:State)
+				{
+					LuaL.error(l, "tweenAngle is read-only.");
+					return 0;
+				}
+			},
+
+			"destroy" => {
+				defaultValue: 0,
+				getter: function(l:State, data:Any)
+				{
+					Lua.pushcfunction(l, destroyC);
+					return 1;
+				},
+				setter: function(l:State)
+				{
+					LuaL.error(l, "destroy is read-only.");
+					return 0;
+				}
+			},
+
+			"y" => {
+				defaultValue: connectedText.y,
+				getter: function(l:State, data:Any):Int
+				{
+					Lua.pushnumber(l, connectedText.y);
+					return 1;
+				},
+				setter: SetNumProperty
+			}
+
+		];
+
+		ListOfTexts.push(this);
+	}
+
+	private static function tweenPos(l:StatePointer):Int
+	{
+		// 1 = self
+		// 2 = x
+		// 3 = y
+		// 4 = time
+		var xp = LuaL.checknumber(state, 2);
+		var yp = LuaL.checknumber(state, 3);
+		var time = LuaL.checknumber(state, 4);
+
+		Lua.getfield(state, 1, "id");
+		var index = Lua.tostring(state, -1);
+
+		var text:FlxText = null;
+
+		for (i in ListOfTexts)
+		{
+			if (i.className == index)
+				text = i.text;
+		}
+
+		if (text == null)
+		{
+			LuaL.error(state, "Failure to tween (couldn't find text " + index + ")");
+			return 0;
+		}
+
+		FlxTween.tween(text, {x: xp, y: yp}, time);
+
+		return 0;
+	}
+
+	private static function tweenAngle(l:StatePointer):Int
+	{
+		// 1 = self
+		// 2 = angle
+		// 3 = time
+		var nangle = LuaL.checknumber(state, 2);
+		var time = LuaL.checknumber(state, 3);
+
+		Lua.getfield(state, 1, "id");
+		var index = Lua.tostring(state, -1);
+		var text:FlxText = null;
+
+		for (i in ListOfTexts)
+		{
+			if (i.className == index)
+				text = i.text;
+		}
+
+		if (text == null)
+		{
+			LuaL.error(state, "Failure to tween (couldn't find text " + index + ")");
+			return 0;
+		}
+
+		FlxTween.tween(text, {angle: nangle}, time);
+
+		return 0;
+	}
+
+	private static function tweenAlpha(l:StatePointer):Int
+	{
+		// 1 = self
+		// 2 = alpha
+		// 3 = time
+		var nalpha = LuaL.checknumber(state, 2);
+		var time = LuaL.checknumber(state, 3);
+
+		Lua.getfield(state, 1, "id");
+		var index = Lua.tostring(state, -1);
+		var text:FlxText = null;
+
+		for (i in ListOfTexts)
+		{
+			if (i.className == index)
+				text = i.text;
+		}
+
+		if (text == null)
+		{
+			LuaL.error(state, "Failure to tween (couldn't find text " + index + ")");
+			return 0;
+		}
+
+		FlxTween.tween(text, {alpha: nalpha}, time);
+
+		return 0;
+	}
+
+	private static function destroy(l:StatePointer):Int
+	{
+		// 1 = self
+
+		Lua.getfield(state, 1, "id");
+		var index = Lua.tostring(state, -1);
+		var text:FlxText = null;
+
+		for (i in ListOfTexts)
+		{
+			if (i.className == index)
+				text = i.text;
+		}
+
+		if (text == null)
+		{
+			LuaL.error(state, "Failure to destroy (couldn't find text " + index + ")");
+			return 0;
+		}
+
+		PlayState.instance.remove(text);
+		text.destroy();
+
+		return 0;
+	}
+
+	private static var destroyC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(destroy);
+	private static var tweenPosC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(tweenPos);
+	private static var tweenAngleC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(tweenAngle);
+	private static var tweenAlphaC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(tweenAlpha);
+
+	private function SetNumProperty(l:State)
+	{
+		// 1 = self
+		// 2 = key
+		// 3 = value
+		// 4 = metatable
+		if (Lua.type(l, 3) != Lua.LUA_TNUMBER)
+		{
+			LuaL.error(l, "invalid argument #3 (number expected, got " + Lua.typename(l, Lua.type(l, 3)) + ")");
+			return 0;
+		}
+		Reflect.setProperty(text, Lua.tostring(l, 2), Lua.tonumber(l, 3));
 		return 0;
 	}
 

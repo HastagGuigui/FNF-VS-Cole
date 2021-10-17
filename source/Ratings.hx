@@ -4,9 +4,7 @@ class Ratings
 {
 	public static function GenerateLetterRank(accuracy:Float) // generate a letter ranking
 	{
-		var ranking:String = "N/A";
-		if (FlxG.save.data.botplay && !PlayState.loadRep)
-			ranking = "BotPlay";
+		var ranking:String = "Unknown";
 
 		if (PlayState.misses == 0) // S
 			ranking = "S";
@@ -47,9 +45,9 @@ class Ratings
 		}
 
 		if (accuracy == 0)
-			ranking = "N/A";
-		else if (FlxG.save.data.botplay && !PlayState.loadRep)
-			ranking = "BotPlay";
+			ranking = "??";
+		if (FlxG.save.data.botplay && !PlayState.loadRep)
+			ranking = "Otto mode! <3";
 
 		return ranking;
 	}
@@ -93,7 +91,7 @@ class Ratings
 			(!PlayStateChangeables.botPlay
 				|| PlayState.loadRep ? "Score:" + (Conductor.safeFrames != 10 ? score + " (" + scoreDef + ")" : "" + score) + // Score
 					(FlxG.save.data.accuracyDisplay ? // Accuracy Toggle
-						" | Combo Breaks:"
+						" | Misses:"
 						+ PlayState.misses
 						+ // 	Misses/Combo Breaks
 						" | Accuracy:"

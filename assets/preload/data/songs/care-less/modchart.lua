@@ -1,3 +1,5 @@
+--side note: LuaText is just LuaSprite but with a "text" propety
+
 -- this gets called starts when the level loads.
 function start(song) -- arguments, the song name
     window.x = 10
@@ -6,6 +8,9 @@ function start(song) -- arguments, the song name
     -- set to the games res
     window.height = 720
     window.width = 1280
+    testText = makeText("04b03.TTF", "Text test", 32, "idk", false)
+    testText.x = 0;
+    testText.y = 0;
 end
 
 function songStart()
@@ -66,6 +71,7 @@ end
 
 -- this gets called every step
 function stepHit(step) -- arguments, the current step of the song (4 steps are in a beat)
+    --testText.text = step.." steps"
 
 end
 
