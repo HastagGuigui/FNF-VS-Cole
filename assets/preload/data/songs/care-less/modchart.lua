@@ -2,15 +2,10 @@
 
 -- this gets called starts when the level loads.
 function start(song) -- arguments, the song name
-    window.x = 10
-    window.y = 25
-
-    -- set to the games res
-    window.height = 720
-    window.width = 1280
-    testText = makeText("04b03.TTF", "Text test", 32, "idk", false)
+    makeText("04b03.TTF", "Text test", 32, "testText", false)
     testText.x = 0;
     testText.y = 0;
+    testText.text = "changed the text"
 end
 
 function songStart()
@@ -18,6 +13,7 @@ function songStart()
         local receptor = _G['receptor_'..i]
         receptor.alpha = 0
     end
+    testText.text = "changed it again"
 end
 
 -- this gets called every frame
@@ -39,6 +35,7 @@ function beatHit(beat) -- arguments, the current beat of the song
     elseif beat == 15 then 
         Game:changeStage("undefined")
         gf.alpha = 0
+        testText.text = "File > New, stare at nothing for an hour or two,"
     elseif beat == 41 then
         for i=0,3,1 do
             local receptor = _G['receptor_'..i]

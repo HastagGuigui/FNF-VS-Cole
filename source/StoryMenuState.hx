@@ -25,7 +25,7 @@ class StoryMenuState extends MusicBeatState
 
 	static function weekData():Array<Dynamic>
 	{
-		return [['Tutorial'], ['Lofi-beats', 'Care-less', 'Unreachable']];
+		return [['tutorial'], ['care-less']];
 	}
 
 	var curDifficulty:Int = 1;
@@ -252,22 +252,24 @@ class StoryMenuState extends MusicBeatState
 						changeWeek(1);
 					}
 
-					if (gamepad.pressed.DPAD_UP)
-						rightArrow.animation.play('press')
-					else
-						rightArrow.animation.play('idle');
-					if (gamepad.pressed.DPAD_DOWN)
-						leftArrow.animation.play('press');
-					else
-						leftArrow.animation.play('idle');
-
 					if (gamepad.justPressed.DPAD_UP)
 					{
+						rightArrow.animation.play('press');
 						changeDifficulty(1);
 					}
+					else
+					{
+						rightArrow.animation.play('idle');
+					}
+
 					if (gamepad.justPressed.DPAD_DOWN)
 					{
+						leftArrow.animation.play('press');
 						changeDifficulty(-1);
+					}
+					else
+					{
+						leftArrow.animation.play('idle');
 					}
 				}
 
@@ -281,7 +283,7 @@ class StoryMenuState extends MusicBeatState
 					changeWeek(1);
 				}
 
-				if (controls.UP)
+				if (FlxG.keys.justPressed.UP)
 				{
 					rightArrow.animation.play('press');
 					changeDifficulty(1);
@@ -289,7 +291,7 @@ class StoryMenuState extends MusicBeatState
 				else
 					rightArrow.animation.play('idle');
 
-				if (controls.DOWN)
+				if (FlxG.keys.justPressed.DOWN)
 				{
 					leftArrow.animation.play('press');
 					changeDifficulty(-1);
@@ -392,6 +394,8 @@ class StoryMenuState extends MusicBeatState
 		#if !switch
 		intendedScore = Highscore.getWeekScore(curWeek, curDifficulty);
 		#end
+
+		trace("difficulty = " + curDifficulty);
 
 		FlxTween.tween(sprDifficulty, {y: leftArrow.y + 15, alpha: 1}, 0.07);
 	}

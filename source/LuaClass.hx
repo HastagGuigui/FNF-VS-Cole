@@ -1751,6 +1751,7 @@ class LuaSprite extends LuaClass
 	override function Register(l:State)
 	{
 		state = l;
+		trace("Registered " + className);
 		super.Register(l);
 	}
 }
@@ -1767,6 +1768,8 @@ class LuaText extends LuaClass
 	{
 		super();
 		className = name;
+
+		trace("Creating text object: " + name);
 
 		properties = [
 			"text" => {
@@ -2062,6 +2065,7 @@ class LuaText extends LuaClass
 	override function Register(l:State)
 	{
 		state = l;
+		trace("Registered " + className);
 		super.Register(l);
 	}
 }

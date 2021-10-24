@@ -264,7 +264,19 @@ class ModchartState
 				return Reflect.getProperty(PlayState.instance, id);
 			return PlayState.PlayState.strumLineNotes.members[Std.parseInt(id)];
 		}
-		return luaSprites.get(id);
+		else
+		{
+			if (luaTexts.get(id) == null)
+			{
+				if (Std.parseInt(id) == null)
+					return Reflect.getProperty(PlayState.instance, id);
+				return PlayState.PlayState.strumLineNotes.members[Std.parseInt(id)];
+			}
+			else
+			{
+				return luaSprites.get(id);
+			}
+		}
 	}
 
 	function getPropertyByName(id:String)
@@ -395,7 +407,15 @@ class ModchartState
 	{
 		#if FEATURE_FILESYSTEM
 		var textObject:FlxText = new FlxText(0, 0);
+		trace("create font asset with font \""
+			+ Paths.font(fontPath)
+			+ "\", size "
+			+ fontSize
+			+ " with content being \""
+			+ textContent
+			+ "\"");
 		textObject.setFormat(Paths.font(fontPath), fontSize, FlxColor.WHITE, RIGHT);
+		textObject.text = textContent;
 
 		luaTexts.set(toBeCalled, textObject);
 		// and I quote:
