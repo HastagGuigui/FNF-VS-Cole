@@ -2,7 +2,7 @@
 
 -- this gets called starts when the level loads.
 function start(song) -- arguments, the song name
-    makeText("04b03.TTF", "Text test", 32, "testText", false)
+    makeText("04b03.TTF", "Text test", 32, "testText", true)
     testText.x = 0;
     testText.y = 0;
     testText.text = "changed the text"
