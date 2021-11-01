@@ -1794,6 +1794,7 @@ class LuaText extends LuaClass
 
 					var newText = Lua.tostring(l, 3);
 					connectedText.text = newText;
+					trace("changed text to \"" + Lua.tostring(l, 3) + "\"");
 					LuaClass.DefaultSetter(l);
 					return 0;
 				}

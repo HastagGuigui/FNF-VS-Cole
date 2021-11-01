@@ -112,7 +112,7 @@ class OptionsMenu extends MusicBeatState
 			+ " - Description - "
 			+ currentDescription, 12);
 		versionShit.scrollFactor.set();
-		versionShit.setFormat(Paths.font("04b03.TTF"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		versionShit.setFormat("04b03", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 
 		blackBorder = new FlxSprite(-30, FlxG.height + 40).makeGraphic((Std.int(versionShit.width + 900)), Std.int(versionShit.height + 600), FlxColor.BLACK);
 		blackBorder.alpha = 0.5;

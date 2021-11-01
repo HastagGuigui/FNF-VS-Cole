@@ -55,14 +55,14 @@ class PauseSubState extends MusicBeatSubstate
 		var levelInfo:FlxText = new FlxText(20, 15, 0, "", 32);
 		levelInfo.text += PlayState.SONG.songName;
 		levelInfo.scrollFactor.set();
-		levelInfo.setFormat(Paths.font("04b03.TTF"), 32);
+		levelInfo.setFormat("04b03", 32);
 		levelInfo.updateHitbox();
 		add(levelInfo);
 
 		var levelDifficulty:FlxText = new FlxText(20, 15 + 32, 0, "", 32);
 		levelDifficulty.text += CoolUtil.difficultyFromInt(PlayState.storyDifficulty).toUpperCase();
 		levelDifficulty.scrollFactor.set();
-		levelDifficulty.setFormat(Paths.font('vcr.ttf'), 32);
+		levelDifficulty.setFormat("04b03", 32);
 		levelDifficulty.updateHitbox();
 		add(levelDifficulty);
 
@@ -85,7 +85,7 @@ class PauseSubState extends MusicBeatSubstate
 			+ " - Description - "
 			+ 'Adds value to global offset, per song.', 12);
 		perSongOffset.scrollFactor.set();
-		perSongOffset.setFormat(Paths.font("04b03.TTF"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		perSongOffset.setFormat("04b03", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 
 		#if FEATURE_FILESYSTEM
 		add(perSongOffset);

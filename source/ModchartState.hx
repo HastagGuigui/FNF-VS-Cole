@@ -406,15 +406,9 @@ class ModchartState
 	function makeLuaText(fontPath:String, textContent:String, fontSize:Int, toBeCalled:String, drawBehind:Bool)
 	{
 		#if FEATURE_FILESYSTEM
-		var textObject:FlxText = new FlxText(0, 0);
-		trace("create font asset with font \""
-			+ Paths.font(fontPath)
-			+ "\", size "
-			+ fontSize
-			+ " with content being \""
-			+ textContent
-			+ "\"");
-		textObject.setFormat(Paths.font(fontPath), fontSize, FlxColor.WHITE, RIGHT);
+		var textObject:FlxText = new FlxText(FlxG.width * 0.5, FlxG.height * 0.5);
+		trace("create font asset with font \"" + fontPath + "\", size " + fontSize + " with content being \"" + textContent + "\"");
+		textObject.setFormat(fontPath, fontSize, FlxColor.WHITE, RIGHT);
 		textObject.text = textContent;
 
 		luaTexts.set(toBeCalled, textObject);
