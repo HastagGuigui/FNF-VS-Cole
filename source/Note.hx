@@ -123,7 +123,7 @@ class Note extends FlxSprite
 
 		if (inCharter)
 		{
-			frames = Paths.getSparrowAtlas('NOTE_assets');
+			frames = PlayState.noteskinSprite;
 
 			for (i in 0...4)
 			{
@@ -154,9 +154,9 @@ class Note extends FlxSprite
 			switch (noteTypeCheck)
 			{
 				case 'pixel':
-					loadGraphic(Paths.loadImage('weeb/pixelUI/arrows-pixels', 'week6'), true, 17, 17);
+					loadGraphic(PlayState.noteskinPixelSprite, true, 17, 17);
 					if (isSustainNote)
-						loadGraphic(Paths.loadImage('weeb/pixelUI/arrowEnds', 'week6'), true, 7, 6);
+						loadGraphic(PlayState.noteskinPixelSpriteEnds, true, 7, 6);
 
 					for (i in 0...4)
 					{
@@ -165,10 +165,10 @@ class Note extends FlxSprite
 						animation.add(dataColor[i] + 'holdend', [i + 4]); // Tails
 					}
 
-					setGraphicSize(Std.int(width * PlayState.daPixelZoom));
+					setGraphicSize(Std.int(width * CoolUtil.daPixelZoom));
 					updateHitbox();
 				default:
-					frames = Paths.getSparrowAtlas('NOTE_assets');
+					frames = PlayState.noteskinSprite;
 
 					for (i in 0...4)
 					{
@@ -224,8 +224,8 @@ class Note extends FlxSprite
 		if (FlxG.save.data.downscroll && sustainNote)
 			flipY = true;
 
-		var stepHeight = (((0.45 * Conductor.stepCrochet) / (PlayState.songMultiplier < 1 ? PlayState.songMultiplier : 1)) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? PlayState.SONG.speed : PlayStateChangeables.scrollSpeed,
-			2));
+		var stepHeight = (((0.45 * Conductor.stepCrochet)) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? PlayState.SONG.speed : PlayStateChangeables.scrollSpeed,
+			2)) / PlayState.songMultiplier;
 
 		if (isSustainNote && prevNote != null)
 		{

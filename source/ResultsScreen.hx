@@ -159,7 +159,7 @@ class ResultsScreen extends FlxSubState
 		mean = HelperFunctions.truncateFloat(mean / PlayState.rep.replay.songNotes.length, 2);
 
 		settingsText = new FlxText(20, FlxG.height + 50, 0,
-			'SF: ${PlayState.rep.replay.sf} | Ratio (SA/GA): ${Math.round(sicks)}:1 ${Math.round(goods)}:1 | Mean: ${mean}ms | Played on ${PlayState.SONG.songName} ${CoolUtil.difficultyFromInt(PlayState.storyDifficulty).toUpperCase()}');
+			'Mean: ${mean}ms (SICK:${Ratings.timingWindows[3]}ms,GOOD:${Ratings.timingWindows[2]}ms,BAD:${Ratings.timingWindows[1]}ms,SHIT:${Ratings.timingWindows[0]}ms)');
 		settingsText.size = 16;
 		settingsText.setBorderStyle(FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, 2, 1);
 		settingsText.color = FlxColor.WHITE;
@@ -188,14 +188,16 @@ class ResultsScreen extends FlxSubState
 
 	override function update(elapsed:Float)
 	{
-		if (music != null && music.volume < 0.5)
-			music.volume += 0.01 * elapsed;
+		if (music != null)
+			if (music.volume < 0.5)
+				music.volume += 0.01 * elapsed;
 
 		// keybinds
 
 		if (PlayerSettings.player1.controls.ACCEPT)
 		{
-			music.fadeOut(0.3);
+			if (music != null)
+				music.fadeOut(0.3);
 
 			PlayState.loadRep = false;
 			PlayState.stageTesting = false;
