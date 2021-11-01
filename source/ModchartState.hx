@@ -53,7 +53,7 @@ class ModchartState
 		{
 			if (e != "attempt to call a nil value")
 			{
-				trace(StringTools.replace(e, "c++", "haxe function"));
+				trace(StringTools.replace(e, "C++", "haxe function"));
 			}
 		}
 		if (result == null)
@@ -403,11 +403,19 @@ class ModchartState
 		return toBeCalled;
 	}
 
-	function makeLuaText(fontPath:String, textContent:String, fontSize:Int, toBeCalled:String, drawBehind:Bool)
+	function makeLuaText(fontPath:String, textContent:String, fontSize:Int, toBeCalled:String, drawBehind:Bool, ?x:Float, ?y:Float)
 	{
 		#if FEATURE_FILESYSTEM
-		var textObject:FlxText = new FlxText(FlxG.width * 0.5, FlxG.height * 0.5);
-		trace("create font asset with font \"" + fontPath + "\", size " + fontSize + " with content being \"" + textContent + "\"");
+		var newX:Float = 0;
+		var newY:Float = 0;
+		if (x != null && y != null)
+		{
+			newX = x;
+			newY = y;
+		}
+		var textObject:FlxText = new FlxText(newX, newY);
+		trace("create font asset with font \"" + fontPath + "\", size " + fontSize + " with content being \"" + textContent + "\" at position " + newX + ";"
+			+ newY);
 		textObject.setFormat(fontPath, fontSize, FlxColor.WHITE, RIGHT);
 		textObject.text = textContent;
 

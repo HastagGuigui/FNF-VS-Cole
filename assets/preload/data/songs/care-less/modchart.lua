@@ -2,9 +2,7 @@
 
 -- this gets called starts when the level loads.
 function start(song) -- arguments, the song name
-    makeText("04b03", " ", 32, "testText", false)
-    testText.x = -100;
-    testText.y = 0;
+
 end
 
 function songStart()
@@ -12,6 +10,7 @@ function songStart()
         local receptor = _G['receptor_'..i]
         receptor.alpha = 0
     end
+    makeText("04b03", " ", 32, "testText", false, 10, 10)
 end
 
 -- this gets called every frame
@@ -34,7 +33,6 @@ function beatHit(beat) -- arguments, the current beat of the song
         Game:changeStage("undefined")
         gf.alpha = 0
         testText.text = "File > New, stare at nothing for an hour or two,"
-        testText.x = -200;
     elseif beat == 41 then
         for i=0,3,1 do
             local receptor = _G['receptor_'..i]
