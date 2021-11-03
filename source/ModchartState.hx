@@ -403,23 +403,29 @@ class ModchartState
 		return toBeCalled;
 	}
 
-	function makeLuaText(fontPath:String, textContent:String, fontSize:Int, toBeCalled:String, drawBehind:Bool, ?x:Float, ?y:Float)
+	function makeLuaText(fontPath:String, textContent:String, position:String, fontSize:Int, toBeCalled:String, drawBehind:Bool)
 	{
+		// i am going insane
+		var positionSplit = position.split(";");
+		trace(fontPath, textContent, fontSize, toBeCalled, Std.parseInt(positionSplit[0]), Std.parseInt(positionSplit[1]));
 		#if FEATURE_FILESYSTEM
-		var newX:Float = 0;
-		var newY:Float = 0;
-		if (x != null && y != null)
-		{
-			newX = x;
-			newY = y;
-		}
-		var textObject:FlxText = new FlxText(newX, newY);
-		trace("create font asset with font \"" + fontPath + "\", size " + fontSize + " with content being \"" + textContent + "\" at position " + newX + ";"
-			+ newY);
-		textObject.setFormat(fontPath, fontSize, FlxColor.WHITE, RIGHT);
-		textObject.text = textContent;
+		var textObject:FlxText = new FlxText(Std.parseInt(positionSplit[0]), Std.parseInt(positionSplit[1]), 0, textContent);
+		textObject.setFormat(fontPath, fontSize);
+		textObject.borderColor = FlxColor.BLACK;
+		textObject.borderSize = 1;
+		textObject.borderStyle = OUTLINE;
+		/*trace("create font asset with font \""
+				+ fontPath
+				+ "\", size "
+				+ fontSize
+				+ " with content being \""
+				+ textContent
+				+ "\" at position "
+				+ x
+				+ ";"
+				+ y);
+			// textObject.text = textContent; */ luaTexts.set(toBeCalled, textObject);
 
-		luaTexts.set(toBeCalled, textObject);
 		// and I quote:
 		// shitty layering but it works!
 		@:privateAccess
