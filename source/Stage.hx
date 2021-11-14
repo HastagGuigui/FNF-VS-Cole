@@ -69,6 +69,7 @@ class Stage extends MusicBeatState
 					wardBG.setGraphicSize(Std.int(wardBG.width * 1.5));
 					swagBacks["wardBG"] = wardBG;
 					toAdd.push(wardBG);
+					camZoom = 0.85;
 				}
 			case "coleWardDay":
 				{
@@ -78,6 +79,7 @@ class Stage extends MusicBeatState
 					wardBG.setGraphicSize(Std.int(wardBG.width * 1.5));
 					swagBacks["wardBGDay"] = wardBG;
 					toAdd.push(wardBG);
+					camZoom = 0.85;
 				}
 			case "scrollingGrid":
 				{
@@ -86,6 +88,7 @@ class Stage extends MusicBeatState
 					gridTile.setGraphicSize(48 * 256, 48 * 256);
 					swagBacks['gridTile'] = gridTile;
 					toAdd.push(gridTile);
+					camZoom = 0.85;
 				}
 			case "samuraiWard":
 				{
@@ -95,6 +98,7 @@ class Stage extends MusicBeatState
 					wardBG.setGraphicSize(Std.int(wardBG.width * 1.5));
 					swagBacks["samuraiWard"] = wardBG;
 					toAdd.push(wardBG);
+					camZoom = 0.85;
 				}
 			case 'halloween':
 				{

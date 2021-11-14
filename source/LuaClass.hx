@@ -1626,6 +1626,7 @@ class LuaSprite extends LuaClass
 
 		for (i in ListOfSprites)
 		{
+			trace("IS [" + i.className + "] EQUAL TO [" + index + "] ???");
 			if (i.className == index)
 				sprite = i.sprite;
 		}
@@ -1686,8 +1687,13 @@ class LuaSprite extends LuaClass
 
 		for (i in ListOfSprites)
 		{
+			trace("IS [" + i.className + "] EQUAL TO [" + index + "] ???");
 			if (i.className == index)
+			{
+				trace("yup");
+				trace("now what about the sprite??? (if true, im fucked) " + (i.sprite == null));
 				sprite = i.sprite;
+			}
 		}
 
 		if (sprite == null)
@@ -2239,10 +2245,18 @@ class LuaGame extends LuaClass
 
 		PlayState.Stage = new Stage(stageName);
 
+		PlayState.instance.removeObject(PlayState.gf);
+		PlayState.instance.removeObject(PlayState.boyfriend);
+		PlayState.instance.removeObject(PlayState.dad);
+
 		for (i in PlayState.Stage.toAdd)
 		{
 			PlayState.instance.add(i);
 		}
+
+		PlayState.instance.addObject(PlayState.gf);
+		PlayState.instance.addObject(PlayState.boyfriend);
+		PlayState.instance.addObject(PlayState.dad);
 
 		return 0;
 	}

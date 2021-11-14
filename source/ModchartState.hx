@@ -258,13 +258,8 @@ class ModchartState
 				return PlayState.dad;
 		}
 		// lua objects or what ever
+		trace("I NEED A LITTLE [" + id + "]");
 		if (luaSprites.get(id) == null)
-		{
-			if (Std.parseInt(id) == null)
-				return Reflect.getProperty(PlayState.instance, id);
-			return PlayState.PlayState.strumLineNotes.members[Std.parseInt(id)];
-		}
-		else
 		{
 			if (luaTexts.get(id) == null)
 			{
@@ -272,11 +267,9 @@ class ModchartState
 					return Reflect.getProperty(PlayState.instance, id);
 				return PlayState.PlayState.strumLineNotes.members[Std.parseInt(id)];
 			}
-			else
-			{
-				return luaSprites.get(id);
-			}
+			return luaTexts.get(id);
 		}
+		return luaSprites.get(id);
 	}
 
 	function getPropertyByName(id:String)
