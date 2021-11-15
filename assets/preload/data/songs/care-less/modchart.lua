@@ -2,6 +2,7 @@
 
 -- this gets called starts when the level loads.
 function start(song) -- arguments, the song name
+    spinLength = 0
 end
 
 function songStart()
@@ -16,6 +17,12 @@ end
 
 -- this gets called every frame
 function update(elapsed) -- arguments, how long it took to complete a frame
+    local currentBeat = (songPos / 1000)*(bpm/60)
+    for i=0,7,1 do
+        local receptor = _G['receptor_'..i]
+        receptor.x = receptor.defaultX + spinLength * math.sin(((currentBeat/2) + i*0.25) * math.pi)
+        receptor.y = receptor.defaultY + spinLength * math.cos(((currentBeat/2) + i*0.25) * math.pi)
+    end
 end
 
 -- this gets called every beat
@@ -64,8 +71,6 @@ function beatHit(beat) -- arguments, the current beat of the song
         white.alpha = 1
         white:tweenAlpha(0,1)
         --Game:changeStage("stage")
-    elseif beat == 50 then
-        white:destroy()
     elseif beat == 81 then
         Game:changeStage("scrollingGrid")
     elseif beat == 111 then
@@ -95,6 +100,14 @@ function beatHit(beat) -- arguments, the current beat of the song
             local receptor = _G['receptor_'..i]
             receptor.alpha = 1
         end
+    elseif beat == 217 then
+        Game:changeStage("scrollingGrid")
+        spinLength = 16
+    elseif beat == 264 then
+        Game:changeStage("coleWard")
+        spinLength = 0
+        white.alpha = 1
+        white:tweenAlpha(0,1)
     end
 end
 
