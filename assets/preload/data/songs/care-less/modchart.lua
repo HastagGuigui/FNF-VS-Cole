@@ -2,8 +2,6 @@
 
 -- this gets called starts when the level loads.
 function start(song) -- arguments, the song name
-    makeSprite("white", "white", false)
-    white.alpha = 0
 end
 
 function songStart()
@@ -47,6 +45,11 @@ function beatHit(beat) -- arguments, the current beat of the song
         end
         camGame:tweenPos(camGame.x, camGame.y - 100, 1);
 
+        makeSprite("white", "white", false)
+        white.alpha = 0
+        white.x = -300
+        white.y = 100
+
     elseif beat == 47 then
         for i=0,3,1 do
             local receptor = _G['receptor_'..i]
@@ -58,15 +61,40 @@ function beatHit(beat) -- arguments, the current beat of the song
         end
         gf.alpha = 1
         Game:changeStage("coleWardDay")
-        white.alpha = 0.5
-        white:tweenAlpha(0,0.5)
+        white.alpha = 1
+        white:tweenAlpha(0,1)
         --Game:changeStage("stage")
+    elseif beat == 50 then
+        white:destroy()
     elseif beat == 81 then
         Game:changeStage("scrollingGrid")
     elseif beat == 111 then
         Game:changeStage("samuraiWard")
     elseif beat == 127 then
         Game:changeStage("coleWardDay")
+    elseif beat == 175 then
+        Game:changeStage("samuraiWard")
+        gf.alpha = 0
+    elseif beat == 191 then
+        Game:changeStage("undefined")
+        boyfriend.alpha = 0
+        for i=0,7,1 do
+            local receptor = _G['receptor_'..i]
+            receptor.alpha = 0
+        end
+    elseif beat == 195 then
+        for i=4,7,1 do
+            local receptor = _G['receptor_'..i]
+            receptor:tweenAlpha(0.5,1)
+        end
+    elseif beat == 201 then
+        Game:changeStage("coleWard")
+        boyfriend.alpha = 1
+        gf.alpha = 1
+        for i=0,7,1 do
+            local receptor = _G['receptor_'..i]
+            receptor.alpha = 1
+        end
     end
 end
 

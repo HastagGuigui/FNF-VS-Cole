@@ -1595,6 +1595,8 @@ class LuaSprite extends LuaClass
 		];
 
 		ListOfSprites.push(this);
+
+		sprite = connectedSprite;
 	}
 
 	private static function findNote(time:Float, data:Int)
@@ -1685,6 +1687,8 @@ class LuaSprite extends LuaClass
 
 		var sprite:FlxSprite = null;
 
+		trace(ListOfSprites);
+
 		for (i in ListOfSprites)
 		{
 			trace("IS [" + i.className + "] EQUAL TO [" + index + "] ???");
@@ -1750,6 +1754,9 @@ class LuaSprite extends LuaClass
 			LuaL.error(l, "invalid argument #3 (number expected, got " + Lua.typename(l, Lua.type(l, 3)) + ")");
 			return 0;
 		}
+
+		trace(sprite);
+
 		Reflect.setProperty(sprite, Lua.tostring(l, 2), Lua.tonumber(l, 3));
 		return 0;
 	}

@@ -334,15 +334,6 @@ class ModchartState
 		#if FEATURE_FILESYSTEM
 		// pre lowercasing the song name (makeLuaSprite)
 		var songLowercase = StringTools.replace(PlayState.SONG.songId, " ", "-").toLowerCase();
-		switch (songLowercase)
-		{
-			case 'dad-battle':
-				songLowercase = 'dadbattle';
-			case 'philly-nice':
-				songLowercase = 'philly';
-			case 'm.i.l.f':
-				songLowercase = 'milf';
-		}
 
 		var path = Sys.getCwd() + "assets/data/songs/" + PlayState.SONG.songId + '/';
 
