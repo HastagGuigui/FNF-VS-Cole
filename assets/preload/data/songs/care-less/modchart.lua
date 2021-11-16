@@ -13,6 +13,7 @@ function songStart()
     makeText("04b03", "", "10;220", 32, "firstText")
     makeText("04b03", "", "-70;220", 32, "secondText")
     makeText("04b03", "", "-200;210", 32, "thirdText")
+    makeText("04b03", "", "-150;200", 32, "fourthText")
 end
 
 -- this gets called every frame
@@ -177,13 +178,29 @@ function stepHit(step) -- arguments, the current step of the song (4 steps are i
     elseif step == 149 then
         thirdText.text = "Click in some chords, like a hundred other artists"
     elseif step == 153 then
-        thirdText.text = "Click in some chords, like a hundred other artists would"
+        thirdText.text = "Click in some chords, like a hundred other artists could"
     elseif step == 155 then
-        thirdText.text = "Click in some chords, like a hundred other artists would do,"
+        thirdText.text = "Click in some chords, like a hundred other artists could do,"
     elseif step == 159 then
-        thirdText.text = "Click in some chords, like a hundred other artists would do, like"
+        thirdText.text = "Click in some chords, like a hundred other artists could do, like"
     elseif step == 161 then
         thirdText.text = ""
+    elseif step == 197 then
+        fourthText.text = "Probably"
+    elseif step == 201 then
+        fourthText.text = "Probably gonna"
+    elseif step == 205 then
+        fourthText.text = "Probably gonna hit"
+    elseif step == 207 then
+        fourthText.text = "Probably gonna hit that"
+    elseif step == 211 then
+        fourthText.text = "Probably gonna hit that \"don't"
+    elseif step == 215 then
+        fourthText.text = "Probably gonna hit that \"don't save"
+    elseif step == 219 then
+        fourthText.text = "Probably gonna hit that \"don't save changes\","
+    elseif step == 223 then
+        fourthText.text = "Probably gonna hit that \"don't save changes\", again"
     end
 end
 
