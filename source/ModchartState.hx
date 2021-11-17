@@ -454,6 +454,9 @@ class ModchartState
 		trace("LuaJIT version: " + Lua.versionJIT());
 		Lua.init_callbacks(lua);
 
+		luaSprites = [];
+		luaTexts = [];
+
 		// shaders = new Array<LuaShader>();
 
 		// pre lowercasing the song name (new)

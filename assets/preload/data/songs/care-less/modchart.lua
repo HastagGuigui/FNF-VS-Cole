@@ -13,7 +13,8 @@ function songStart()
     makeText("04b03", "", "10;220", 32, "firstText")
     makeText("04b03", "", "-70;220", 32, "secondText")
     makeText("04b03", "", "-200;210", 32, "thirdText")
-    makeText("04b03", "", "-150;200", 32, "fourthText")
+    makeText("04b03", "", "-150;220", 32, "fourthText")
+    makeText("04b03", "", "50;190", 32, "fifthText")
 end
 
 -- this gets called every frame
@@ -195,12 +196,28 @@ function stepHit(step) -- arguments, the current step of the song (4 steps are i
         fourthText.text = "Probably gonna hit that"
     elseif step == 211 then
         fourthText.text = "Probably gonna hit that \"don't"
-    elseif step == 215 then
+    elseif step == 214 then
         fourthText.text = "Probably gonna hit that \"don't save"
-    elseif step == 219 then
+    elseif step == 217 then
         fourthText.text = "Probably gonna hit that \"don't save changes\","
     elseif step == 223 then
         fourthText.text = "Probably gonna hit that \"don't save changes\", again"
+    elseif step == 227 then
+        fourthText.text = ""
+    elseif step == 231 then
+        fifthText.text = "Used"
+    elseif step == 233 then
+        fifthText.text = "Used to"
+    elseif step == 235 then
+        fifthText.text = "Used to write"
+    elseif step == 237 then
+        fifthText.text = "Used to write a"
+    elseif step == 239 then
+        fifthText.text = "Used to write a song"
+    elseif step == 243 then
+        fifthText.text = "Used to write a song a"
+    elseif step == 245 then
+        fifthText.text = "Used to write a song a day..."
     end
 end
 
