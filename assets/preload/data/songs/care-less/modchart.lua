@@ -218,6 +218,8 @@ function stepHit(step) -- arguments, the current step of the song (4 steps are i
         fifthText.text = "Used to write a song a"
     elseif step == 245 then
         fifthText.text = "Used to write a song a day..."
+    elseif step == 249 then
+        fifthText.text = ""
     end
 end
 
