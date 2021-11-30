@@ -3,6 +3,11 @@
 -- this gets called starts when the level loads.
 function start(song) -- arguments, the song name
     spinLength = 0
+    makeSprite("explorer", "explorer", false)
+    explorer.y = -500
+    explorer.width = 1.5
+    explorer.height = 1.5
+    explorer.alpha = 0
 end
 
 function songStart()
@@ -202,6 +207,9 @@ function stepHit(step) -- arguments, the current step of the song (4 steps are i
         fourthText.text = "Probably gonna hit that \"don't save changes\","
     elseif step == 223 then
         fourthText.text = "Probably gonna hit that \"don't save changes\", again"
+    elseif step == 225 then
+        explorer.alpha = 1;
+        explorer:tweenPos(explorer.x, 200, 1, "expoOut");
     elseif step == 227 then
         fourthText.text = ""
     elseif step == 231 then

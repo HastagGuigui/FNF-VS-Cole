@@ -1590,6 +1590,46 @@ class LuaSprite extends LuaClass
 					return 1;
 				},
 				setter: SetNumProperty
+			},
+
+			"width" => {
+				defaultValue: connectedSprite.scale.x,
+				getter: function(l:State, data:Any):Int
+				{
+					Lua.pushnumber(l, connectedSprite.scale.x);
+					return 1;
+				},
+				setter: function(l:State):Int
+				{
+					if (Lua.type(l, 3) != Lua.LUA_TNUMBER)
+					{
+						LuaL.error(l, "invalid argument #3 (number expected, got " + Lua.typename(l, Lua.type(l, 3)) + ")");
+						return 0;
+					}
+					connectedSprite.setGraphicSize(Std.int(Lua.tonumber(l, 3) * connectedSprite.width),
+						Std.int(connectedSprite.scale.y * connectedSprite.height));
+					return 1;
+				}
+			},
+
+			"height" => {
+				defaultValue: connectedSprite.scale.y,
+				getter: function(l:State, data:Any):Int
+				{
+					Lua.pushnumber(l, connectedSprite.scale.y);
+					return 1;
+				},
+				setter: function(l:State):Int
+				{
+					if (Lua.type(l, 3) != Lua.LUA_TNUMBER)
+					{
+						LuaL.error(l, "invalid argument #3 (number expected, got " + Lua.typename(l, Lua.type(l, 3)) + ")");
+						return 0;
+					}
+					connectedSprite.setGraphicSize(Std.int(connectedSprite.scale.x * connectedSprite.width),
+						Std.int(Lua.tonumber(l, 3) * connectedSprite.height));
+					return 1;
+				}
 			}
 
 		];
@@ -1617,6 +1657,7 @@ class LuaSprite extends LuaClass
 		// 2 = x
 		// 3 = y
 		// 4 = time
+		// 5 = easing
 		var xp = LuaL.checknumber(state, 2);
 		var yp = LuaL.checknumber(state, 3);
 		var time = LuaL.checknumber(state, 4);
@@ -1639,7 +1680,33 @@ class LuaSprite extends LuaClass
 			return 0;
 		}
 
-		FlxTween.tween(sprite, {x: xp, y: yp}, time);
+		var easing = FlxEase.linear;
+
+		// help me it's going to be very long
+		switch (Lua.tostring(state, 5))
+		{
+			case "linear":
+
+			case "backIn":
+				easing = FlxEase.backIn;
+
+			case "backInOut":
+				easing = FlxEase.backInOut;
+
+			case "backOut":
+				easing = FlxEase.backOut;
+
+			case "expoIn":
+				easing = FlxEase.expoIn;
+
+			case "expoInOut":
+				easing = FlxEase.expoInOut;
+
+			case "expoOut":
+				easing = FlxEase.expoOut;
+		}
+
+		FlxTween.tween(sprite, {x: xp, y: yp}, time, {ease: easing});
 
 		return 0;
 	}
