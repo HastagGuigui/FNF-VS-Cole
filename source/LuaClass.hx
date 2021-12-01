@@ -1568,6 +1568,20 @@ class LuaSprite extends LuaClass
 				}
 			},
 
+			"tweenScale" => {
+				defaultValue: 0,
+				getter: function(l:State, data:Any)
+				{
+					Lua.pushcfunction(l, tweenScaleC);
+					return 1;
+				},
+				setter: function(l:State)
+				{
+					LuaL.error(l, "tweenScale is read-only.");
+					return 0;
+				}
+			},
+
 			"destroy" => {
 				defaultValue: 0,
 				getter: function(l:State, data:Any)
@@ -1772,8 +1786,83 @@ class LuaSprite extends LuaClass
 			LuaL.error(state, "Failure to tween (couldn't find sprite " + index + ")");
 			return 0;
 		}
+		else
+		{
+			trace(sprite.alpha, nalpha, time);
+		}
 
 		FlxTween.tween(sprite, {alpha: nalpha}, time);
+
+		return 0;
+	}
+
+	private static function tweenScale(l:StatePointer):Int
+	{
+		// 1 self
+		// 2 width
+		// 3 height
+		// 4 time
+		// 5 easing
+		var w = LuaL.checknumber(state, 2);
+		var h = LuaL.checknumber(state, 3);
+		var t = LuaL.checknumber(state, 4);
+		var easing = Lua.tostring(state, 5);
+
+		Lua.getfield(state, 1, "id");
+		var index = Lua.tostring(state, -1);
+
+		var sprite:FlxSprite = null;
+
+		trace(ListOfSprites);
+
+		for (i in ListOfSprites)
+		{
+			trace("IS [" + i.className + "] EQUAL TO [" + index + "] ???");
+			if (i.className == index)
+			{
+				trace("yup");
+				trace("now what about the sprite??? (if true, im fucked) " + (i.sprite == null));
+				sprite = i.sprite;
+			}
+		}
+
+		if (sprite == null)
+		{
+			LuaL.error(state, "Failure to tween (couldn't find sprite " + index + ")");
+			return 0;
+		}
+		var easing = FlxEase.linear;
+
+		// help me it's going to be very long
+		switch (Lua.tostring(state, 5))
+		{
+			case "linear":
+
+			case "backIn":
+				easing = FlxEase.backIn;
+
+			case "backInOut":
+				easing = FlxEase.backInOut;
+
+			case "backOut":
+				easing = FlxEase.backOut;
+
+			case "expoIn":
+				easing = FlxEase.expoIn;
+
+			case "expoInOut":
+				easing = FlxEase.expoInOut;
+
+			case "expoOut":
+				easing = FlxEase.expoOut;
+		}
+		sprite.updateHitbox();
+
+		trace(Std.int(w * sprite.width), Std.int(h * sprite.height));
+
+		FlxTween.tween(sprite.scale, {x: Std.int(w * sprite.width), y: Std.int(h * sprite.height)}, t, {ease: easing});
+
+		sprite.updateHitbox();
 
 		return 0;
 	}
@@ -1809,6 +1898,7 @@ class LuaSprite extends LuaClass
 	private static var tweenPosC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(tweenPos);
 	private static var tweenAngleC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(tweenAngle);
 	private static var tweenAlphaC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(tweenAlpha);
+	private static var tweenScaleC:cpp.Callable<StatePointer->Int> = cpp.Callable.fromStaticFunction(tweenScale);
 
 	private function SetNumProperty(l:State)
 	{
