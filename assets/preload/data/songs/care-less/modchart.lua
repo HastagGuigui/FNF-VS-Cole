@@ -66,6 +66,8 @@ function beatHit(beat) -- arguments, the current beat of the song
         camGame:tweenPos(camGame.x, camGame.y - 100, 1);
 
         makeSprite("white", "white", false)
+        white.width = white.width*2
+        white.height = white.height*2
         white.alpha = 0
         white.x = -300
         white.y = 100
@@ -261,7 +263,26 @@ function stepHit(step) -- arguments, the current step of the song (4 steps are i
         text6.text = ""
         text7.text = ""
         explorer:tweenPos(explorer.x, -500, 2, "expoInOut");
-        largeError.alpha = 1
+    elseif step == 289 then
+        text5.text = "and"
+    elseif step == 291 then
+        text5.text = "and i"
+    elseif step == 293 then
+        text5.text = "and i can't"
+    elseif step == 295 then
+        text5.text = "and i can't make"
+    elseif step == 297 then
+        text5.text = "and i can't make no"
+    elseif step == 301 then
+        text5.text = "and i can't make no changes"
+    elseif step == 305 then
+        text5.text = "and i can't make no changes to"
+    elseif step == 307 then
+        text5.text = "and i can't make no changes to save"
+    elseif step == 309 then
+        text5.text = "and i can't make no changes to save me"
+    elseif step == 315 then
+        text5.text = ""
     end
 end
 
