@@ -24,6 +24,7 @@ function songStart()
     makeText("04b03", "", "70;250", 32, "text5")
     makeText("04b03", "", "90;300", 32, "text6")
     makeText("04b03", "", "90;338", 32, "text7")
+    makeText("04b03", "", "70;500", 32, "text8")
 end
 
 -- this gets called every frame
@@ -283,6 +284,22 @@ function stepHit(step) -- arguments, the current step of the song (4 steps are i
         text5.text = "and i can't make no changes to save me"
     elseif step == 315 then
         text5.text = ""
+    elseif step == 321 then
+        text8.text = "wish"
+    elseif step == 322 then
+        text8.text = "wish i"
+    elseif step == 323 then
+        text8.text = "wish i could"
+    elseif step == 325 then
+        text8.text = "wish i could write"
+    elseif step == 327 then
+        text8.text = "wish i could write more,"
+    elseif step == 331 then
+        text8.text = "wish i could write more, and"
+    elseif step == 333 then
+        text8.text = "wish i could write more, and care"
+    elseif step == 335 then
+        text8.text = "wish i could write more, and care less"
     end
 end
 
