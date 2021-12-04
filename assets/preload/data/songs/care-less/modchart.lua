@@ -16,7 +16,6 @@ function songStart()
     explorer.height = 1.5
     explorer.alpha = 0
     makeSprite("large_error", "largeError", false)
-    --largeError.alpha = 0
     makeText("04b03", "", "10;220", 32, "text1")
     makeText("04b03", "", "-70;220", 32, "text2")
     makeText("04b03", "", "-200;210", 32, "text3")
@@ -24,7 +23,7 @@ function songStart()
     makeText("04b03", "", "70;250", 32, "text5")
     makeText("04b03", "", "90;300", 32, "text6")
     makeText("04b03", "", "90;338", 32, "text7")
-    makeText("04b03", "", "70;500", 32, "text8")
+    largeError.alpha = 0
 end
 
 -- this gets called every frame
@@ -264,6 +263,7 @@ function stepHit(step) -- arguments, the current step of the song (4 steps are i
         text6.text = ""
         text7.text = ""
         explorer:tweenPos(explorer.x, -500, 2, "expoInOut");
+        largeError.alpha = 1
     elseif step == 289 then
         text5.text = "and"
     elseif step == 291 then
@@ -284,22 +284,63 @@ function stepHit(step) -- arguments, the current step of the song (4 steps are i
         text5.text = "and i can't make no changes to save me"
     elseif step == 315 then
         text5.text = ""
+        makeText("04b03", "", "50;500", 32, "text8")
     elseif step == 321 then
         text8.text = "wish"
-    elseif step == 322 then
-        text8.text = "wish i"
     elseif step == 323 then
-        text8.text = "wish i could"
+        text8.text = "wish i"
     elseif step == 325 then
-        text8.text = "wish i could write"
+        text8.text = "wish i could"
     elseif step == 327 then
+        text8.text = "wish i could write"
+    elseif step == 330 then
         text8.text = "wish i could write more,"
-    elseif step == 331 then
-        text8.text = "wish i could write more, and"
-    elseif step == 333 then
-        text8.text = "wish i could write more, and care"
     elseif step == 335 then
+        text8.text = "wish i could write more, and"
+    elseif step == 337 then
+        text8.text = "wish i could write more, and care"
+    elseif step == 341 then
         text8.text = "wish i could write more, and care less"
+    elseif step == 351 then
+        text5.text = ""
+    elseif step == 353 then
+        text8.text = "wish"
+    elseif step == 355 then
+        text8.text = "wish i"
+    elseif step == 357 then
+        text8.text = "wish i could"
+    elseif step == 359 then
+        text8.text = "wish i could write"
+    elseif step == 362 then
+        text8.text = "wish i could write more,"
+    elseif step == 367 then
+        text8.text = "wish i could write more, and"
+    elseif step == 369 then
+        text8.text = "wish i could write more, and care"
+    elseif step == 373 then
+        text8.text = "wish i could write more, and care less"
+    elseif step == 381 then
+        text8.text = ""
+    elseif step == 389 then
+        text8.text = "write"
+    elseif step == 393 then
+        text8.text = "write more,"
+    elseif step == 400 then
+        text8.text = "write more, and"
+    elseif step == 401 then
+        text8.text = "write more, and care"
+    elseif step == 405 then
+        text8.text = "write more, and care less,"
+    elseif step == 416 then
+        text8.text = "and"
+    elseif step == 417 then
+        text8.text = "and care"
+    elseif step == 421 then
+        text8.text = "and care less"
+    elseif step == 429 then
+        text8.text = ""
+    elseif step == 433 then
+        camGame:tweenZoom(100,0.5)
     end
 end
 

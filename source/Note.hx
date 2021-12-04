@@ -222,7 +222,10 @@ class Note extends FlxSprite
 		// then what is this lol
 		// BRO IT LITERALLY SAYS IT FLIPS IF ITS A TRAIL AND ITS DOWNSCROLL
 		if (FlxG.save.data.downscroll && sustainNote)
+		{
 			flipY = true;
+			// noteCharterObject.flipY = true;
+		}
 
 		var stepHeight = (((0.45 * Conductor.stepCrochet)) * FlxMath.roundDecimal(PlayStateChangeables.scrollSpeed == 1 ? PlayState.SONG.speed : PlayStateChangeables.scrollSpeed,
 			2)) / PlayState.songMultiplier;
